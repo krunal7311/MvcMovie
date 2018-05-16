@@ -1,10 +1,14 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+
 namespace MvcMovie.Models
 {
-    public class MvcMovieContext
+    public class MvcMovieContext : DbContext
     {
-        public MvcMovieContext()
+        public MvcMovieContext(DbContextOptions<MvcMovieContext> options)
+            : base(options)
         {
         }
+
+        public DbSet<MvcMovie.Models.Movie> Movie { get; set; }
     }
 }
