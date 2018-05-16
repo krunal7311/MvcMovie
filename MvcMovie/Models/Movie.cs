@@ -1,4 +1,6 @@
-﻿using System;
+﻿//Using Code First Approach
+
+using System;
 using System.ComponentModel.DataAnnotations;
 
 //ADD ALL FORM VALIDATION HERE
@@ -30,7 +32,9 @@ namespace MvcMovie.Models
         [StringLength(5)]
         [Required]
         public string Rating { get; set; }
+      
 
-
+        //public byte[] Content { get; set; }
+        public string Poster { get; set; }
     }
 }
