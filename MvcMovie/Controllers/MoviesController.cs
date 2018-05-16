@@ -17,13 +17,20 @@ namespace MvcMovie.Controllers
         {
             _context = context;
         }
-
-        // GET: Movies
-        public async Task<IActionResult> Index()
+        //Using LINQ to perform search. 
+        //SQLite is case sensitive. 
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.Movie.ToListAsync());
-        }
+            var movies = from m in _context.Movie
+                         select m;
 
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                movies = movies.Where(s => s.Title.Contains(searchString));
+            }
+
+            return View(await movies.ToListAsync());
+        }
         // GET: Movies/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -65,6 +72,7 @@ namespace MvcMovie.Controllers
         }
 
         // GET: Movies/Edit/5
+        //Shows the edit form for the movie selected
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -84,7 +92,14 @@ namespace MvcMovie.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+
+
+        //used to prevent forgery of a request
+        //The Form Tag Helper generates a hidden anti-forgery token that must match the [ValidateAntiForgeryToken] 
+        //generated anti-forgery token in the Edit method of the Movies controller.
+        //It is paired up with an anti-forgery token generated in the edit view file (Views/Movies/Edit.cshtml). 
         [ValidateAntiForgeryToken]
+
         public async Task<IActionResult> Edit(int id, [Bind("ID,Title,ReleaseDate,Genre,Price")] Movie movie)
         {
             if (id != movie.ID)

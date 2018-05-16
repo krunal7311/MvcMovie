@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using MvcMovie.Models;
+
 namespace MvcMovie
 {
     public class Startup
@@ -23,6 +24,7 @@ namespace MvcMovie
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
             services.AddDbContext<MvcMovieContext>(options =>
                  options.UseSqlite("Data Source=MvcMovie.db"));
         }
